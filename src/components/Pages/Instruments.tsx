@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Title from '../Title'
-import PageContainer from '../PageContainer'
 import ImageAndText from '../ImageAndText';
 import { openSheetApiUrl } from '../../helpers/connect';
 import TableIdContext from '../../AppProvider';
@@ -47,7 +46,7 @@ const Instruments: React.FC<IInstrument> = ({ }) => {
   }, [data]);
 
   return (
-    <PageContainer>
+    <>
       <Title title={data ? data[0]?.pageTitle : ''} />
 
       {data?.map((item, index) => {
@@ -62,7 +61,7 @@ const Instruments: React.FC<IInstrument> = ({ }) => {
           />
         );
       })}
-    </PageContainer>
+    </>
   )
 }
 
