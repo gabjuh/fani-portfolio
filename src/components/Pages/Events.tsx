@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Title from '../Title';
-import PageContainer from '../PageContainer';
 import EventItem from '../EventItem';
 import { openSheetApiUrl } from '../../helpers/connect';
 import TableIdContext from '../../AppProvider';
 
-interface IEventsData {
+export interface IEventsData {
+  id: string;
   pageTitle?: string;
   active?: string;
   title?: string;
@@ -19,6 +19,7 @@ interface IEventsData {
   band?: string;
   bandLink?: string;
   link?: string;
+  description?: string;
 }
 
 interface IEvents {
@@ -31,7 +32,7 @@ const Events: React.FC<IEvents> = ({ }) => {
   const tableId = useContext(TableIdContext);
 
   useEffect(() => {
-    fetch(`${openSheetApiUrl}${tableId.id}/${'events'}`)
+    fetch(`${openSheetApiUrl}${tableId.id}/${'concerts'}`)
       .then((response) => response.json())
       .then((data) => setData(data));
   }, []);
@@ -65,54 +66,56 @@ const Events: React.FC<IEvents> = ({ }) => {
   });
 
   return (
-    <PageContainer>
-      <Title title={data ? data[0]?.pageTitle : ''} />
       <>
-        <div className="lg:w-[900px] xl:w-[1200px] w-full mx-auto">
-          <h2 className="text-lg mb-10 text-center sm:text-left">Aktuelle Veranstaltungen</h2>
-          {data && getActualEvents()?.map((event, index) => (
-            <React.Fragment key={`actual-${index}`}>
-              {event.active === '1' && (
-                <EventItem
-                  title={event.title}
-                  category={event.category}
-                  startDate={event.startDate}
-                  endDate={event.endDate}
-                  startTime={event.startTime}
-                  // endTime={event.endTime}
-                  location={event.location}
-                  locationLink={event.locationLink}
-                  band={event.band}
-                  bandLink={event.bandLink}
-                  isPast={false}
-                />
-              )}
-            </React.Fragment>
-          ))}
+        <Title title={data ? data[0]?.pageTitle : ''} />
+        <>
+          <div className="lg:w-[900px] xl:w-[1200px] w-full mx-auto">
+            <h2 className="text-lg mb-10 text-center sm:text-left">Aktuelle Veranstaltungen</h2>
+            {data && getActualEvents()?.map((event, index) => (
+              <React.Fragment key={`actual-${index}`}>
+                {event.active === '1' && (
+                  <EventItem
+                    id={event.id}
+                    title={event.title}
+                    category={event.category}
+                    startDate={event.startDate}
+                    endDate={event.endDate}
+                    startTime={event.startTime}
+                    // endTime={event.endTime}
+                    location={event.location}
+                    locationLink={event.locationLink}
+                    band={event.band}
+                    bandLink={event.bandLink}
+                    isPast={false}
+                  />
+                )}
+              </React.Fragment>
+            ))}
 
-          <h2 className="text-lg mb-10 text-center sm:text-left">Vergangene Veranstaltungen</h2>
-          {data && getPastEvents()?.map((event, index) => (
-            <React.Fragment key={`past-${index}`}>
-              {event.active === '1' && (
-                <EventItem
-                  title={event.title}
-                  category={event.category}
-                  startDate={event.startDate}
-                  endDate={event.endDate}
-                  startTime={event.startTime}
-                  // endTime={event.endTime}
-                  location={event.location}
-                  locationLink={event.locationLink}
-                  band={event.band}
-                  bandLink={event.bandLink}
-                  isPast={true}
-                />
-              )}
-            </React.Fragment>
-        ))}
-        </div>
+            <h2 className="text-lg mb-10 text-center sm:text-left">Vergangene Veranstaltungen</h2>
+            {data && getPastEvents()?.map((event, index) => (
+              <React.Fragment key={`past-${index}`}>
+                {event.active === '1' && (
+                  <EventItem
+                    id={event.id}
+                    title={event.title}
+                    category={event.category}
+                    startDate={event.startDate}
+                    endDate={event.endDate}
+                    startTime={event.startTime}
+                    // endTime={event.endTime}
+                    location={event.location}
+                    locationLink={event.locationLink}
+                    band={event.band}
+                    bandLink={event.bandLink}
+                    isPast={true}
+                  />
+                )}
+              </React.Fragment>
+          ))}
+          </div>
+        </>
       </>
-    </PageContainer>
   );
 };
 
