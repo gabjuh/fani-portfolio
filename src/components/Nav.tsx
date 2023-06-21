@@ -1,17 +1,19 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom'
 import TableIdContext from '../AppProvider';
+import scrollToId from '../helpers/scrollToId';
 
 interface INavMenuItem {
   index: number;
   title: string;
   link: string;
   selected: boolean;
-  handleClick: (index: number) => void;
+  // handleClick: (index: number) => void;
+  handleClick: () => void;
 }
 
 const NavMenuItem: React.FC<INavMenuItem> = ({
-  index,
+  // index,
   title,
   link,
   selected,
@@ -22,7 +24,7 @@ const NavMenuItem: React.FC<INavMenuItem> = ({
       <Link
         to={link}
         className={`block hover:bg-base-200 focus:bg-secondary ${selected ? 'bg-secondary text-white focus:text-white active:text-white' : 'text-gray-700'}`}
-        onClick={() => handleClick(index)}
+        onClick={() => handleClick()}
       >
         {title}
       </Link>
@@ -41,7 +43,7 @@ interface INav {
 const Nav: React.FC<INav> = ({
   homepageTitle,
   selected,
-  handleClick,
+  // handleClick,
   email,
   emailTooltipText
 }) => {
@@ -58,30 +60,35 @@ const Nav: React.FC<INav> = ({
 
   const menuItems = [
     {
-      title: 'Biographie',
-      link: '/biography',
+      title: 'About me',
+      link: '/#about-me',
       selected: selected === 0,
     },
     {
-      title: 'Instrumente',
-      link: '/instruments',
+      title: 'Ensembles',
+      link: '/#ensembles',
       selected: selected === 1,
     },
     {
-      title: 'Projekte',
-      link: '/projects',
+      title: 'Concerts',
+      link: '/#concerts',
       selected: selected === 2,
     },
     {
-      title: 'Termine',
-      link: '/events',
+      title: 'Media',
+      link: '/#media',
       selected: selected === 3,
+    },
+    {
+      title: 'Contacts',
+      link: '/#contacts',
+      selected: selected === 4,
     },
   ];
 
   return (
     <>
-      <div className="navbar bg-base-100 shadow-xl z-[1500] sticky top-0 mx-auto">
+      <div className="navbar bg-base-100 z-[1500] fixed top-0 mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
             <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -96,7 +103,8 @@ const Nav: React.FC<INav> = ({
                   title={item.title}
                   link={item.link}
                   selected={item.selected}
-                  handleClick={handleClick}
+                  // handleClick={handleClick}
+                  handleClick={() => scrollToId(item.link.slice(2))} 
                 />
               ))}
             </ul>
@@ -106,7 +114,8 @@ const Nav: React.FC<INav> = ({
             <Link
               to="/"
               className="btn btn-ghost normal-case text-xl"
-              onClick={() => handleClick(-1)}
+              onClick={() => scrollToId('hero')}
+              // onClick={() => handleClick(-1)}
             >{homepageTitle}{tableId.name === 'next' && ' - ' + tableId.name.toUpperCase()}</Link>
           </div>
         </div>
@@ -120,7 +129,8 @@ const Nav: React.FC<INav> = ({
                 title={item.title}
                 link={item.link}
                 selected={item.selected}
-                handleClick={handleClick}
+                // handleClick={handleClick}
+                handleClick={() => scrollToId(item.link.slice(2))} 
               />
             ))}
           </ul>
