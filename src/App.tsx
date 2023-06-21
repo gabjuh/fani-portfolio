@@ -2,20 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import Nav from './components/Nav'
-import Welcome from './components/Pages/Welcome'
-import Biography from './components/Pages/Biography'
+// import Biography from './components/Pages/Biography'
 import Instruments from './components/Pages/Instruments';
 import Agb from './components/Pages/Agb'
 import Impressum from './components/Pages/Impressum'
-// import Credits from './components/Pages/Credits'
 import Footer from './components/Footer'
-import Projects from './components/Pages/Projects';
-import Events from './components/Pages/Events'
+// import Projects from './components/Pages/Projects';
+// import Events from './components/Pages/Events'
 import { openSheetApiUrl, tableIds } from './helpers/connect';
 import TableIdContext from './AppProvider';
-
-// import Loading from './components/Loading';
-// import LinkWithLoading from './components/LinkWithLoading';
+import Home from './components/Home';
 
 interface ISettings {
   homepageTitle: string;
@@ -63,11 +59,11 @@ const App: React.FC = () => {
 
           <div className="flex-1">
             <Routes>
-              <Route path="/" element={<Welcome handleClick={handleClick} />} />
-              <Route path="/biography" element={<Biography handleClick={handleClick} />} />
+              <Route path="/" element={<Home />} />
+              {/* <Route path="/biography" element={<Biography handleClick={handleClick} />} /> */}
               <Route path="/instruments" element={<Instruments />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/events" element={<Events />} />
+              {/* <Route path="/projects" element={<Projects />} /> */}
+              {/* <Route path="/events" element={<Events />} /> */}
               <Route path="/agb" element={<Agb />} />
               <Route path="/impressum" element={<Impressum />} />
               {/* <Route path="/credits" element={<Credits tableId={tableId} />} /> */}
