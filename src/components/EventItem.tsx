@@ -3,6 +3,7 @@ import MapIco from './icos/MapIco.tsx';
 // import ClockIco from './icos/ClockIco.tsx';
 
 interface IEventItem {
+  id: string;
   title?: string;
   category?: string;
   startDate: string;
@@ -16,6 +17,7 @@ interface IEventItem {
 }
 
 const EventItem: React.FC<IEventItem> = ({
+  id,
   title,
   category,
   startDate,
@@ -51,7 +53,7 @@ const EventItem: React.FC<IEventItem> = ({
 
   return (
     <>
-      <div className="relative mb-24 cursor-default">
+      <div className="relative cursor-default pt-[100px]" id={`event-main-${id}`}>
         <div className="sm:flex sm:flex-row mx-auto max-w-[900px]">
           {/* DATE */}
           <div className={`relative py-4 lg:w-[50px] sm:pl-2 ${isPast ? 'sm:border-gray-400' : 'border-primary'} sm:border-l-[25px] sm:border-b-[0px] sm:rounded-[10px] sm:min-h-[8rem] text-center`}>
