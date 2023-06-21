@@ -39,17 +39,18 @@ const images = [
   }
 ]
 
-
 interface IImage {
   driveId?: string;
   alt?: string;
   className?: string;
+  type?: string;
 }
 
 const Image: React.FC<IImage> = ({
   driveId,
   alt,
   className,
+  type,
 }) => {
 
   const isImageSourceLocal = false;
@@ -66,10 +67,13 @@ const Image: React.FC<IImage> = ({
     return portfolioImg;
   }
 
-
   return (
-    <div className={`${className} drop-shadow-xl lg:max-w-[400px]`}>
-      {!isImageSourceLocal && <img src={`https://drive.google.com/uc?export=view&id=${driveId}`} alt={alt} loading='lazy' className="rounded-md" />}
+    <div className={`${className} ${type === 'bg' ? 'w-[100%]' : 'drop-shadow-xl lg:max-w-[400px]'}`}>
+      {!isImageSourceLocal && type !== 'bg' ? <img src={`https://drive.google.com/uc?export=view&id=${driveId}`} alt={alt} loading='lazy' className={`rounded-md mx-auto`} /> : 
+
+      <div className="h-[90vh] w-full bg-fixed bg-no-repeat bg-cover bg-center" style={{backgroundImage: `url(https://drive.google.com/uc?export=view&id=${driveId})` }}></div>
+      
+    }
       {/* {!isImageSourceLocal && <img src={`/images/${driveId}`} alt={alt} />} */}
       {isImageSourceLocal && <img src={getImgPath(driveId)} alt={alt} />}
       {/* <img src={`${portfolioImg}`} alt={alt} /> */}
