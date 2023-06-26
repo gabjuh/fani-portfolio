@@ -10,6 +10,7 @@ interface IImageAndText {
   classNameForImg?: string;
   loaded?: boolean;
   text?: string;
+  textAlign?: 'auto' | 'justify';
 }
 
 interface IImageForText {
@@ -38,17 +39,18 @@ const ImageAndText: React.FC<IImageAndText> = ({
   classNameForImg,
   imageLeft,
   loaded,
-  text
+  text,
+  textAlign
 }) => {
-
-  const isJustified = true;
 
   return (
     <>
-      <div className={`flex ${imageLeft ? 'flex-col' : 'flex-col-reverse'} md:flex-row my-28`}>
+      <div className={`flex ${imageLeft ? 'flex-col' : 'flex-col-reverse'} md:flex-row my-16`}>
         {imageLeft && <ImageForText driveId={driveId || ''} alt={alt || 'image'} classNameForImg={classNameForImg} />}
         <div className={`w-full md:w-1/2 flex flex-col ${!imageLeft ? 'items-end' : ''} justify-center`}>
-          <div className={`${imageLeft ? `${isJustified ? 'md:text-justify' : 'md:text-left'} md:ml-8 lg:ml-0` : `${isJustified ? 'md:text-justify' : 'md:text-right'} md:mr-8 lg:mr-0`} ${imageLeft !== undefined ? 'md:text-justify' : ''} text-center leading-8`}>
+          <div 
+            className={`${imageLeft ? textAlign === 'justify' ? 'md:text-justify' : 'md:text-left' : textAlign === 'justify' ? 'md:text-justify' : 'md:text-right'} md:ml-8 lg:ml-0 md:mr-8 lg:mr-0 text-center leading-8`}
+          >
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
               children={loaded && text ? text : ''}
