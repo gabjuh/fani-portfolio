@@ -1,19 +1,22 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
 import TableIdContext from '../AppProvider';
 import scrollToId from '../helpers/scrollToId';
+import { IMenuItem } from '../App';
+import SunIco from './icos/SunIco';
+import MoonIco from './icos/MoonIco';
 
 interface INavMenuItem {
   index: number;
   title: string;
   link: string;
   selected: boolean;
-  // handleClick: (index: number) => void;
-  handleClick: () => void;
+  handleClick: (index: number) => void;
+  // handleClick: () => void;
 }
 
 const NavMenuItem: React.FC<INavMenuItem> = ({
-  // index,
+  index,
   title,
   link,
   selected,
@@ -23,32 +26,75 @@ const NavMenuItem: React.FC<INavMenuItem> = ({
     <li>
       <Link
         to={link}
-        className={`block hover:bg-base-200 focus:bg-secondary ${selected ? 'bg-secondary text-white focus:text-white active:text-white' : 'text-gray-700'}`}
-        onClick={() => handleClick()}
+        className={`mx-4 whitespace-nowrap cursor-pointer px-1 py-3`}
+        onClick={() => handleClick(index)}
       >
         {title}
       </Link>
+      <div className={`h-[4px] ${selected ? 'w-[95%]' : 'w-[0%]'}  hover:w-[95%] bg-secondary mx-auto mt-1 transition-all duration-200 ease-in-out`}></div>
     </li>
   );
 };
 
 interface INav {
+  menuItems: IMenuItem[];
   selected: number;
   handleClick: (index: number) => void;
   homepageTitle?: string;
   email?: string;
   emailTooltipText?: string;
+  darkTheme?: string;
+  lightTheme?: string;
 }
 
 const Nav: React.FC<INav> = ({
+  menuItems,
   homepageTitle,
-  selected,
-  // handleClick,
+  // selected,
+  handleClick,
   email,
-  emailTooltipText
+  emailTooltipText,
+  darkTheme,
+  lightTheme
 }) => {
 
   const [isTooltipOpen, setIsTooltipOpen] = React.useState(false);
+  
+  // Get the current system theme
+  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  const [theme, setTheme] = useState<'light' | 'dark'>(systemTheme);
+
+  // Listen for changes to the prefers-color-scheme media query
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleChange = (e: MediaQueryListEvent) => {
+      setTheme(e.matches ? 'dark' : 'light');
+    };
+    
+  useEffect(() => {
+    // document.documentElement.dataset.theme = lightTheme;
+
+    // Check if the media query matches
+    mediaQuery.addEventListener('change', handleChange);
+
+    // Return a cleanup function to remove the listener
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  })
+  
+  useEffect(() => {    
+    if (theme === 'dark') {
+      document.documentElement.dataset.theme = darkTheme;
+    } else {
+      document.documentElement.dataset.theme = lightTheme;
+    }
+  }, [theme]);
+
+  const handleToggleTheme = () => {
+    if (theme === 'dark') {
+      setTheme('light');
+    } else {
+      setTheme('dark');
+    }
+  }
 
   const tableId = useContext(TableIdContext);
 
@@ -57,35 +103,6 @@ const Nav: React.FC<INav> = ({
       setIsTooltipOpen(true);
     }, 5000);
   }, []);
-
-  const menuItems = [
-    {
-      title: 'About me',
-      link: '/#about-me',
-      selected: selected === 0,
-    },
-    {
-      title: 'Ensembles',
-      link: '/#ensembles',
-      selected: selected === 1,
-    },
-    {
-      title: 'Concerts',
-      link: '/#concerts',
-      selected: selected === 2,
-    },
-    {
-      title: 'Media',
-      link: '/#media',
-      selected: selected === 3,
-    },
-    {
-      title: 'Contacts',
-      link: '/#contacts',
-      selected: selected === 4,
-    },
-  ];
-
   return (
     <>
       <div className="navbar bg-base-100 z-[1500] fixed top-0 mx-auto">
@@ -103,8 +120,8 @@ const Nav: React.FC<INav> = ({
                   title={item.title}
                   link={item.link}
                   selected={item.selected}
-                  // handleClick={handleClick}
-                  handleClick={() => scrollToId(item.link.slice(2))} 
+                  handleClick={handleClick}
+                  // handleClick={() => scrollToId(item.link.slice(2))} 
                 />
               ))}
             </ul>
@@ -121,7 +138,7 @@ const Nav: React.FC<INav> = ({
         </div>
         <div className="hidden lg:flex">
           {/* Horisontal menu */}
-          <ul className="menu menu-horizontal px-1">
+          <ul className="flex flex-row px-1">
             {menuItems.map((item, index) => (
               <NavMenuItem
                 key={index}
@@ -129,17 +146,23 @@ const Nav: React.FC<INav> = ({
                 title={item.title}
                 link={item.link}
                 selected={item.selected}
-                // handleClick={handleClick}
-                handleClick={() => scrollToId(item.link.slice(2))} 
+                handleClick={handleClick}
+                // handleClick={() => scrollToId(item.link.slice(2))} 
               />
             ))}
           </ul>
         </div>
         <div className="navbar-end">
-          <div className={`md:tooltip md:tooltip-sm ${isTooltipOpen ? `md:tooltip-open` : ''} md:tooltip-bottom`} data-tip={emailTooltipText}>
-          <a href={`mailto:${email}`} className="btn btn-secondary text-white">@</a>
+          <div className={`md:tooltip md:tooltip-sm mx-1 ${isTooltipOpen ? `md:tooltip-open` : ''} md:tooltip-bottom`} data-tip={emailTooltipText}>
+            <a href={`mailto:${email}`} className="btn btn-secondary text-white">@</a>
+          </div>
+          <div className={`md:tooltip md:tooltip-sm mx-1 ${isTooltipOpen ? `md:tooltip-open` : ''} md:tooltip-bottom`} data-tip={emailTooltipText}>
+            <button className="btn btn-secondary text-white" onClick={handleToggleTheme}>
+              {theme === 'light' ? <MoonIco /> : <SunIco />}
+            </button>
           </div>
         </div>
+        
       </div>
     </>
   )
