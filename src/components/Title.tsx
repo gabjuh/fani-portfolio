@@ -8,7 +8,7 @@ interface ITitle {
 const Title: React.FC<ITitle> = ({ title, className }) => {
   return (
     <div
-      className={`${className} text-2xl font-semibold mt-5 mb-8`}
+      className={`${className} text-2xl font-semibold mt-5 mb-3`}
     >
       {title}
     </div>
