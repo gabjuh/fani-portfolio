@@ -12,16 +12,55 @@ import Footer from './components/Footer'
 import { openSheetApiUrl, tableIds } from './helpers/connect';
 import TableIdContext from './AppProvider';
 import Home from './components/Home';
+import CV from './components/Pages/CV';
+import scrollToId from './helpers/scrollToId';
 
 interface ISettings {
   homepageTitle: string;
   email?: string;
   emailTooltipText?: string;
   copyright?: string;
+  darkTheme?: string;
+  lightTheme?: string;
 }
+
+export interface IMenuItem {
+  title: string;
+  link: string;
+  selected: boolean;
+}
+
 
 const App: React.FC = () => {
   const [selected, setSelected] = useState(-1);
+
+  const menuItems: IMenuItem[] = [  
+    {
+      title: 'About me',
+      link: '/#about-me',
+      selected: selected === 0,
+    },
+    {
+      title: 'Ensembles',
+      link: '/#ensembles',
+      selected: selected === 1,
+    },
+    {
+      title: 'Concerts',
+      link: '/#concerts',
+      selected: selected === 2,
+    },
+    {
+      title: 'Media',
+      link: '/#media',
+      selected: selected === 3,
+    },
+    {
+      title: 'Contacts',
+      link: '/#contacts',
+      selected: selected === 4,
+    },
+  ];
 
   // Select table of next or public 
   // const tableId = tableIds.public;
@@ -29,7 +68,7 @@ const App: React.FC = () => {
 
   const [data, setData] = useState<ISettings | null>(null);
 
-  console.log(tableId)
+  // console.log(tableId)
 
   useEffect(() => {
     fetch(`${openSheetApiUrl}${tableId.id}/${'settings'}`)
@@ -42,6 +81,7 @@ const App: React.FC = () => {
   }, [data]);
 
   const handleClick = (index: number) => {
+    scrollToId(menuItems[index].link.slice(2));
     setSelected(index);
   }
 
@@ -50,17 +90,20 @@ const App: React.FC = () => {
       <TableIdContext.Provider value={tableId}>
         <div id="App" className="flex flex-col h-screen justify-between">
           <Nav
+            menuItems={menuItems}
             selected={selected}
             handleClick={handleClick}
             homepageTitle={data?.homepageTitle}
             email={data?.email}
             emailTooltipText={data?.emailTooltipText}
+            darkTheme={data?.darkTheme}
+            lightTheme={data?.lightTheme}
           />
 
           <div className="flex-1">
             <Routes>
               <Route path="/" element={<Home />} />
-              {/* <Route path="/biography" element={<Biography handleClick={handleClick} />} /> */}
+              <Route path="/cv" element={<CV />} />
               <Route path="/instruments" element={<Instruments />} />
               {/* <Route path="/projects" element={<Projects />} /> */}
               {/* <Route path="/events" element={<Events />} /> */}
