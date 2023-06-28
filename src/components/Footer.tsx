@@ -11,7 +11,7 @@ const Footer: React.FC<IFooter> = ({ copyright }) => {
       {/* footer menu */}
       <div className="my-4 flex">
 
-        <div className="text-right border border-r-primary pr-5">
+        <div className="text-right pr-5">
           <p className="text-[.75rem] text-gray-400">{copyright}</p>
           <p className="text-[.75rem] text-gray-400">Created by <a href="https://gaborjuhasz.de">Gábor Juhász</a></p>
           <p className="text-[.75rem] text-gray-400"><a href="https://github.com/gabjuh/david-portfolio">a React/OpenSheet Project</a></p>
