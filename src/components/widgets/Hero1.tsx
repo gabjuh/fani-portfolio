@@ -1,10 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import Image from '../Image';
-import { Link } from 'react-router-dom';
 import { openSheetApiUrl } from "../../helpers/connect";
 import TableIdContext from "../../AppProvider";
-import { IEventsData } from "../Pages/Events";
-import scrollToId from "../../helpers/scrollToId";
 import UpcomingEvents from "../UpcomingEvents";
 
 interface IHero1 {}
