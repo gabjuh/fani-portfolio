@@ -1,3 +1,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.rhap_container {
+  padding: 0 !important;
+  /* border: 1px solid red; */
+  width: 100px !important;
+}
+
+.rhap_volume-bar-area {
+  width: 70px !important;
+}
+
+.rhap_button-clear svg {
+  width: 25px !important;
+  height: 25px !important;
+}
+
+.rhap_volume-controls {
+  width: 70px !important;
+}
+
+.rhap_progress-section {
+  width: 0px !important;
+}
+
+.rhap_container {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.rhap_current-left-time {
+  color: #777 !important;
+}
+
+.rhap_volume-bar {
+  background-color: #bbb !important;
+}
