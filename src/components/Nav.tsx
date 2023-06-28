@@ -153,14 +153,19 @@ const Nav: React.FC<INav> = ({
           </ul>
         </div>
         <div className="navbar-end">
+
+          {/* Email button */}
           <div className={`md:tooltip md:tooltip-sm mx-1 ${isTooltipOpen ? `md:tooltip-open` : ''} md:tooltip-bottom`} data-tip={emailTooltipText}>
-            <a href={`mailto:${email}`} className="btn btn-secondary text-white">@</a>
+            <a href={`mailto:${email}`} className="btn lg:btn-md btn-sm btn-secondary text-white">@</a>
           </div>
+
+          {/* Theme toggler button */}
           <div className={`md:tooltip md:tooltip-sm mx-1 ${isTooltipOpen ? `md:tooltip-open` : ''} md:tooltip-bottom`} data-tip={emailTooltipText}>
-            <button className="btn btn-secondary text-white" onClick={handleToggleTheme}>
+            <button className="btn lg:btn-md btn-sm btn-secondary text-white px-[5px] lg:px-[10px]" onClick={handleToggleTheme}>
               {theme === 'light' ? <MoonIco /> : <SunIco />}
             </button>
           </div>
+
         </div>
         
       </div>
