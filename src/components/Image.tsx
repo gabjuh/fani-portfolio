@@ -69,9 +69,21 @@ const Image: React.FC<IImage> = ({
 
   return (
     <div className={`${className} ${type === 'bg' ? 'w-[100%]' : 'drop-shadow-xl lg:max-w-[400px]'}`}>
-      {!isImageSourceLocal && type !== 'bg' ? <img src={`https://drive.google.com/uc?export=view&id=${driveId}`} alt={alt} loading='lazy' className={`rounded-md mx-auto`} /> : 
+      {!isImageSourceLocal && type !== 'bg' ?
 
-      <div className="h-[90vh] w-full bg-fixed bg-no-repeat bg-cover bg-center" style={{backgroundImage: `url(https://drive.google.com/uc?export=view&id=${driveId})` }}></div>
+        <img src={`https://drive.google.com/uc?export=view&id=${driveId}`} alt={alt} loading='lazy' className={`rounded-md mx-auto`} /> :
+
+        <>
+          {/* BG on Desktop  */}
+          <div className="lg:block hidden">
+            <div className="lg:h-[90vh] w-full bg-fixed bg-no-repeat bg-contain lg:bg-cover lg:bg-center" style={{ backgroundImage: `url(https://drive.google.com/uc?export=view&id=${driveId})` }}></div>
+          </div>
+
+          {/* BG as img on Mobile  */}
+          <div className="lg:hidden mt-10">
+            <img src={`https://drive.google.com/uc?export=view&id=${driveId}`} alt={alt} className="w-full" />
+          </div>
+        </>
       
     }
       {/* {!isImageSourceLocal && <img src={`/images/${driveId}`} alt={alt} />} */}
