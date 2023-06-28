@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import './App.css'
 import Nav from './components/Nav'
 // import Biography from './components/Pages/Biography'
-import Instruments from './components/Pages/Instruments';
+// import Instruments from './components/Pages/Instruments';
 import Agb from './components/Pages/Agb'
 import Impressum from './components/Pages/Impressum'
 import Footer from './components/Footer'
@@ -104,7 +104,7 @@ const App: React.FC = () => {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/cv" element={<CV />} />
-              <Route path="/instruments" element={<Instruments />} />
+              {/* <Route path="/instruments" element={<Instruments />} /> */}
               {/* <Route path="/projects" element={<Projects />} /> */}
               {/* <Route path="/events" element={<Events />} /> */}
               <Route path="/agb" element={<Agb />} />
