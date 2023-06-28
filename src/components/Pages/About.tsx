@@ -53,9 +53,10 @@ const About: React.FC<IAbout> = ({
         loaded={loaded}
         text={data?.text}
         textAlign={data?.textAlign}
+        buttonText={data?.buttonText}
       />
 
-      <p className="text-center mt-24">
+      {/* <p className="text-center mt-24">
         <Link
           className="btn btn-secondary text-white ml-4"
           to="/cv"
@@ -63,7 +64,7 @@ const About: React.FC<IAbout> = ({
         >
           {data?.buttonText}
         </Link>
-      </p>
+      </p> */}
     </>
   )
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import Image from './Image';
 import remarkGfm from 'remark-gfm';
+import { Link } from 'react-router-dom';
 
 interface IImageAndText {
   driveId?: string;
@@ -11,6 +12,7 @@ interface IImageAndText {
   loaded?: boolean;
   text?: string;
   textAlign?: 'auto' | 'justify';
+  buttonText?: string;
 }
 
 interface IImageForText {
@@ -40,7 +42,8 @@ const ImageAndText: React.FC<IImageAndText> = ({
   imageLeft,
   loaded,
   text,
-  textAlign
+  textAlign,
+  buttonText
 }) => {
 
   return (
@@ -56,6 +59,17 @@ const ImageAndText: React.FC<IImageAndText> = ({
               children={loaded && text ? text : ''}
             />
           </div>
+          {buttonText &&
+            <p className={`flex-none text-center ${imageLeft ? textAlign === 'justify' ? 'md:text-justify' : 'md:text-left' : textAlign === 'justify' ? 'md:text-justify' : 'md:text-right'} mt-5 w-[100%]`}>
+              <Link
+                className="btn btn-sm btn-secondary text-white"
+                to="/cv"
+              >
+                {buttonText}
+              </Link>
+            </p>
+          }
+
         </div>
         {!imageLeft && <ImageForText driveId={driveId || ''} alt={alt || ''} classNameForImg={classNameForImg} />}
       </div>
