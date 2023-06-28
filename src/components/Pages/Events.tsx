@@ -69,7 +69,7 @@ const Events: React.FC<IEvents> = ({ }) => {
       <>
         <Title title={data ? data[0]?.pageTitle : ''} />
         <>
-          <div className="lg:w-[900px] xl:w-[1200px] w-full mx-auto">
+        <div className="lg:w-[900px] xl:w-[1200px] w-full mx-auto" id="concerts">
             <h2 className="text-lg mb-10 text-center sm:text-left">Aktuelle Veranstaltungen</h2>
             {data && getActualEvents()?.map((event, index) => (
               <React.Fragment key={`actual-${index}`}>
