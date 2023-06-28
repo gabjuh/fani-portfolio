@@ -12,6 +12,7 @@ interface INavMenuItem {
   link: string;
   selected: boolean;
   handleClick: (index: number) => void;
+  isDropdown?: boolean;
   // handleClick: () => void;
 }
 
@@ -20,7 +21,8 @@ const NavMenuItem: React.FC<INavMenuItem> = ({
   title,
   link,
   selected,
-  handleClick
+  handleClick,
+  isDropdown
 }) => {
   return (
     <li>
@@ -31,7 +33,7 @@ const NavMenuItem: React.FC<INavMenuItem> = ({
       >
         {title}
       </Link>
-      <div className={`h-[4px] ${selected ? 'w-[95%]' : 'w-[0%]'}  hover:w-[95%] bg-secondary mx-auto mt-1 transition-all duration-200 ease-in-out`}></div>
+      {!isDropdown && <div className={`h-[4px] ${selected ? 'w-[95%]' : 'w-[0%]'}  hover:w-[95%] bg-secondary mx-auto mt-1 transition-all duration-200 ease-in-out`}></div>}
     </li>
   );
 };
@@ -121,6 +123,7 @@ const Nav: React.FC<INav> = ({
                   link={item.link}
                   selected={item.selected}
                   handleClick={handleClick}
+                  isDropdown={true}
                   // handleClick={() => scrollToId(item.link.slice(2))} 
                 />
               ))}
